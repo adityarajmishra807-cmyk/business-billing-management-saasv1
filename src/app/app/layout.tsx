@@ -3,6 +3,9 @@ import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { createClient } from "@/lib/supabase/server";
 
+// This authenticated route group must run per request, not during static prerendering.
+export const dynamic = "force-dynamic";
+
 export default async function ProtectedAppLayout({ children }: { children: ReactNode }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
